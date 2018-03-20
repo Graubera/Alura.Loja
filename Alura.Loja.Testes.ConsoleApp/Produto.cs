@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 namespace Alura.Loja.Testes.ConsoleApp
 {
     public class Produto
@@ -10,6 +11,7 @@ namespace Alura.Loja.Testes.ConsoleApp
         public string Categoria { get; internal set; }
         public double PrecoUnitario { get; internal set; }
         public string Unidade { get; internal set; }
+        public IList<PromocaoProduto> Promocoes { get; set; }
 
 
         public override string ToString()

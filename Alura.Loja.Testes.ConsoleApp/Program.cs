@@ -12,21 +12,68 @@ namespace Alura.Loja.Testes.ConsoleApp
     {
         static void Main(string[] args)
         {
-            using (var contexto = new LojaContext())
+            using (var context = new LojaContext())
             {
-                contexto.Database.Migrate();
+                context.Database.Migrate();
             }
+            IncluiPromocao();
+            //promocaoDePascoa.Produtos.Add(new PromocaoProduto());
+            //promocaoDePascoa.Produtos.Add(new PromocaoProduto());
+            //promocaoDePascoa.Produtos.Add(new PromocaoProduto());
 
-            var paoFrances = new Produto();
-            paoFrances.Nome = "Pão Francês";
-            paoFrances.PrecoUnitario = 0.40;
-            paoFrances.Unidade = "Unidade";
-            paoFrances.Categoria = "Padaria";
+            //var paoFrances = new Produto();
+            //paoFrances.Nome = "Pão Francês";
+            //paoFrances.PrecoUnitario = 0.40;
+            //paoFrances.Unidade = "Unidade";
+            //paoFrances.Categoria = "Padaria";
 
-            var compra = new Compra();
-            compra.Quantidade = 6;
-            compra.Produto = paoFrances;
-            compra.Preco = paoFrances.PrecoUnitario * compra.Quantidade;
+            //var compra = new Compra();
+            //compra.Quantidade = 6;
+            //compra.Produto = paoFrances;
+            //compra.Preco = paoFrances.PrecoUnitario * compra.Quantidade;
+
+            //using (var context = new LojaContext())
+            //{
+            //    context.Compras.Add(compra);
+            //    context.SaveChanges();
+            //}
+        }
+
+        private static void IncluiPromocao()
+        {
+            var promocaoDePascoa = new Promocao();
+            promocaoDePascoa.Descricao = "Feliz";
+            promocaoDePascoa.DataInicio = DateTime.Now;
+            promocaoDePascoa.DataTermino = DateTime.Now.AddMonths(3);
+
+            Produto p1 = new Produto();
+            Produto p2 = new Produto();
+            Produto p3 = new Produto();
+
+            p1.Nome = "Pão Francês1";
+            p1.PrecoUnitario = 0.40;
+            p1.Unidade = "Unidade";
+            p1.Categoria = "Padaria";
+
+            p2.Nome = "Pão Francês2";
+            p2.PrecoUnitario = 0.40;
+            p2.Unidade = "Unidade";
+            p2.Categoria = "Padaria";
+
+            p3.Nome = "Pão Francês3";
+            p3.PrecoUnitario = 0.40;
+            p3.Unidade = "Unidade";
+            p3.Categoria = "Padaria";
+
+            promocaoDePascoa.IncluiProduto(p1);
+            promocaoDePascoa.IncluiProduto(p2);
+            promocaoDePascoa.IncluiProduto(p3);
+
+            using (var context = new LojaContext())
+            {
+                context.Promocoes.Add(promocaoDePascoa);
+                context.SaveChanges();
+            }
         }
 
         private static void AtualizaProduto()
