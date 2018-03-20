@@ -104,7 +104,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cliente.cs" />
     <Compile Include="Compra.cs" />
+    <Compile Include="Endereco.cs" />
     <Compile Include="IProdutoDAO.cs" />
     <Compile Include="LojaContext.cs" />
     <Compile Include="Migrations\20180319202156_initial.cs" />
@@ -115,10 +117,20 @@
     <Compile Include="Migrations\20180319203305_compra.designer.cs">
       <DependentUpon>20180319203305_compra.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20180320141843_promocao.cs" />
+    <Compile Include="Migrations\20180320141843_promocao.designer.cs">
+      <DependentUpon>20180320141843_promocao.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20180320180422_cliente.cs" />
+    <Compile Include="Migrations\20180320180422_cliente.designer.cs">
+      <DependentUpon>20180320180422_cliente.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\LojaContextModelSnapshot.cs" />
     <Compile Include="Produto.cs" />
     <Compile Include="ProdutoDAOEntity.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Promocao.cs" />
+    <Compile Include="PromocaoProduto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

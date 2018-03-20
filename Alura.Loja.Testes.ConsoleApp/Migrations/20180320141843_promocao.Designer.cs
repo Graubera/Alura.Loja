@@ -4,37 +4,22 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
 namespace Alura.Loja.Testes.ConsoleApp.Migrations
 {
     [DbContext(typeof(LojaContext))]
-    partial class LojaContextModelSnapshot : ModelSnapshot
+    [Migration("20180320141843_promocao")]
+    partial class promocao
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.0.2-rtm-10011")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("Alura.Loja.Testes.ConsoleApp.Cliente", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("EnderecoClienteId");
-
-                    b.Property<string>("Nome");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EnderecoClienteId")
-                        .IsUnique()
-                        .HasFilter("[EnderecoClienteId] IS NOT NULL");
-
-                    b.ToTable("Clientes");
-                });
 
             modelBuilder.Entity("Alura.Loja.Testes.ConsoleApp.Compra", b =>
                 {
@@ -52,26 +37,6 @@ namespace Alura.Loja.Testes.ConsoleApp.Migrations
                     b.HasIndex("ProdutoId");
 
                     b.ToTable("Compras");
-                });
-
-            modelBuilder.Entity("Alura.Loja.Testes.ConsoleApp.Endereco", b =>
-                {
-                    b.Property<int>("ClienteId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Bairro");
-
-                    b.Property<int>("CEP");
-
-                    b.Property<string>("Cidade");
-
-                    b.Property<string>("Logradouro");
-
-                    b.Property<int>("Numero");
-
-                    b.HasKey("ClienteId");
-
-                    b.ToTable("Enderecos");
                 });
 
             modelBuilder.Entity("Alura.Loja.Testes.ConsoleApp.Produto", b =>
@@ -120,13 +85,6 @@ namespace Alura.Loja.Testes.ConsoleApp.Migrations
                     b.HasIndex("ProdutoId");
 
                     b.ToTable("PromocaoProduto");
-                });
-
-            modelBuilder.Entity("Alura.Loja.Testes.ConsoleApp.Cliente", b =>
-                {
-                    b.HasOne("Alura.Loja.Testes.ConsoleApp.Endereco", "Endereco")
-                        .WithOne("Cliente")
-                        .HasForeignKey("Alura.Loja.Testes.ConsoleApp.Cliente", "EnderecoClienteId");
                 });
 
             modelBuilder.Entity("Alura.Loja.Testes.ConsoleApp.Compra", b =>
