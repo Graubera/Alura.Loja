@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -11,12 +12,21 @@ namespace Alura.Loja.Testes.ConsoleApp
     {
         static void Main(string[] args)
         {
-            //GravarUsandoAdoNet();
-            //GravarUsandoEntity();
-            //ExcluirProdutos();
-            RecuperarProdutos();
-            AtualizaProduto();
-            RecuperarProdutos();
+            using (var contexto = new LojaContext())
+            {
+                contexto.Database.Migrate();
+            }
+
+            var paoFrances = new Produto();
+            paoFrances.Nome = "Pão Francês";
+            paoFrances.PrecoUnitario = 0.40;
+            paoFrances.Unidade = "Unidade";
+            paoFrances.Categoria = "Padaria";
+
+            var compra = new Compra();
+            compra.Quantidade = 6;
+            compra.Produto = paoFrances;
+            compra.Preco = paoFrances.PrecoUnitario * compra.Quantidade;
         }
 
         private static void AtualizaProduto()
@@ -60,7 +70,7 @@ namespace Alura.Loja.Testes.ConsoleApp
             Produto p = new Produto();
             p.Nome = "Harry Potter e a Ordem da Fênix";
             p.Categoria = "Livros";
-            p.Preco = 19.89;
+            p.PrecoUnitario = 19.89;
 
             using (var context = new ProdutoDAOEntity())
             {
@@ -69,17 +79,17 @@ namespace Alura.Loja.Testes.ConsoleApp
             }
         }
 
-        private static void GravarUsandoAdoNet()
-        {
-            Produto p = new Produto();
-            p.Nome = "Harry Potter e a Ordem da Fênix";
-            p.Categoria = "Livros";
-            p.Preco = 19.89;
+        //private static void GravarUsandoAdoNet()
+        //{
+        //    Produto p = new Produto();
+        //    p.Nome = "Harry Potter e a Ordem da Fênix";
+        //    p.Categoria = "Livros";
+        //    p.PrecoUnitario = 19.89;
 
-            using (var repo = new ProdutoDAO())
-            {
-                repo.Adicionar(p);
-            }
-        }
+        //    using (var repo = new ProdutoDAO())
+        //    {
+        //        repo.Adicionar(p);
+        //    }
+        //}
     }
 }
