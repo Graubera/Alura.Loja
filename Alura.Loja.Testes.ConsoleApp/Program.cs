@@ -16,30 +16,119 @@ namespace Alura.Loja.Testes.ConsoleApp
             {
                 context.Database.Migrate();
             }
-            IncluiPromocao();
-            //promocaoDePascoa.Produtos.Add(new PromocaoProduto());
-            //promocaoDePascoa.Produtos.Add(new PromocaoProduto());
-            //promocaoDePascoa.Produtos.Add(new PromocaoProduto());
 
-            //var paoFrances = new Produto();
-            //paoFrances.Nome = "Pão Francês";
-            //paoFrances.PrecoUnitario = 0.40;
-            //paoFrances.Unidade = "Unidade";
-            //paoFrances.Categoria = "Padaria";
+            using (var context = new LojaContext())
+            {
+                var cliente = context
+                    .Clientes
+                    .Include(c => c.Endereco)
+                    .FirstOrDefault();
 
-            //var compra = new Compra();
-            //compra.Quantidade = 6;
-            //compra.Produto = paoFrances;
-            //compra.Preco = paoFrances.PrecoUnitario * compra.Quantidade;
+                Debug.WriteLine($"Endereco de entrega : {cliente.Endereco.Logradouro}");
 
-            //using (var context = new LojaContext())
-            //{
-            //    context.Compras.Add(compra);
-            //    context.SaveChanges();
-            //}
+                var produto = context
+                    .Produtos
+                    .Include(p => p.Compras )
+                    .Where(p => p.Id == 1)
+                    .FirstOrDefault();
+
+                context.Entry(produto)
+                    .Collection(p => p.Compras)
+                    .Query()
+                    .Where(c => c.Preco > 10)
+                    .Load();
+
+                Debug.WriteLine($"Mostrando as compras do produto : {produto.Nome}");
+                foreach (Compra item in produto.Compras)
+                {
+                    Debug.WriteLine(item.Produto);
+                }
+
+            }
         }
 
-        private static void IncluiPromocao()
+        private static void ExibeProdutosDaPromocao()
+        {
+            using (var context = new LojaContext())
+            {
+                Promocao promocao = context
+                    .Promocoes
+                    .Include(p => p.Produtos)
+                    .ThenInclude(pp => pp.Produto)
+                    .FirstOrDefault();
+
+                Debug.WriteLine("\nMostrando os produtos da promoção...");
+                foreach (var item in promocao.Produtos)
+                {
+                    Debug.WriteLine(item.Produto);
+                }
+            }
+        }
+
+        private static void incluirPromocao()
+        {
+            using (var context = new LojaContext())
+            {
+                var promocao = new Promocao();
+                promocao.Descricao = "Queima Total Janeiro 2017";
+                promocao.DataInicio = new DateTime(2017, 1, 1);
+                promocao.DataTermino = new DateTime(2017, 1, 31);
+
+                var produtos = context
+                    .Produtos
+                    .Where(p => p.Categoria == "Padaria")
+                    .ToList();
+
+                foreach (var item in produtos)
+                {
+                    promocao.IncluiProduto(item);
+                }
+                context.Promocoes.Add(promocao);
+                context.SaveChanges();
+            }
+        }
+
+        private static void one2many()
+        {
+            var paoFrances = new Produto();
+            paoFrances.Nome = "Pão Francês";
+            paoFrances.PrecoUnitario = 0.40;
+            paoFrances.Unidade = "Unidade";
+            paoFrances.Categoria = "Padaria";
+
+            var compra = new Compra();
+            compra.Quantidade = 6;
+            compra.Produto = paoFrances;
+            compra.Preco = paoFrances.PrecoUnitario * compra.Quantidade;
+
+            using (var context = new LojaContext())
+            {
+                context.Compras.Add(compra);
+                context.SaveChanges();
+            }
+        }
+
+        private static void One2One()
+        {
+            var pessoa = new Cliente();
+            pessoa.Nome = "Ritilino";
+            pessoa.Endereco = new Endereco()
+            {
+                Numero = 12,
+                Logradouro = "Rua",
+                CEP = 1231231,
+                Bairro = "cenrto",
+                Cidade = "mga"
+            };
+
+            using (var context = new LojaContext())
+            {
+                context.Clientes.Add(pessoa);
+                context.SaveChanges();
+            }
+        }
+
+        private static void Many2Many()
         {
             var promocaoDePascoa = new Promocao();
             promocaoDePascoa.Descricao = "Feliz";
@@ -82,7 +171,7 @@ namespace Alura.Loja.Testes.ConsoleApp
             {
                 Produto primeiro = context.Produtos().First();
                 primeiro.Nome = "VVVVV";
-                context.Atualizar(primeiro);                
+                context.Atualizar(primeiro);
             }
         }
 
@@ -94,7 +183,7 @@ namespace Alura.Loja.Testes.ConsoleApp
                 foreach (var item in produtos)
                 {
                     context.Remover(item);
-                }                
+                }
             }
         }
 
@@ -122,7 +211,7 @@ namespace Alura.Loja.Testes.ConsoleApp
             using (var context = new ProdutoDAOEntity())
             {
                 context.Adicionar(p);
-                
+
             }
         }
 
