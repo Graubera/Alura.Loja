@@ -12,5 +12,7 @@ namespace Alura.Loja.Testes.ConsoleApp
         void Atualizar(Produto p);
         void Remover(Produto p);
         IList<Produto> Produtos();
+
+        
     }
 }

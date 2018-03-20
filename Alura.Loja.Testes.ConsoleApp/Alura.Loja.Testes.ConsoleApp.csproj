@@ -35,6 +35,9 @@
     <Reference Include="Microsoft.EntityFrameworkCore, Version=2.0.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.EntityFrameworkCore.2.0.2\lib\netstandard2.0\Microsoft.EntityFrameworkCore.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.EntityFrameworkCore.Design, Version=2.0.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.EntityFrameworkCore.Design.2.0.2\lib\net461\Microsoft.EntityFrameworkCore.Design.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.EntityFrameworkCore.Relational, Version=2.0.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.EntityFrameworkCore.Relational.2.0.2\lib\netstandard2.0\Microsoft.EntityFrameworkCore.Relational.dll</HintPath>
     </Reference>
@@ -101,10 +104,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compra.cs" />
     <Compile Include="IProdutoDAO.cs" />
     <Compile Include="LojaContext.cs" />
+    <Compile Include="Migrations\20180319202156_initial.cs" />
+    <Compile Include="Migrations\20180319202156_initial.designer.cs">
+      <DependentUpon>20180319202156_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20180319203305_compra.cs" />
+    <Compile Include="Migrations\20180319203305_compra.designer.cs">
+      <DependentUpon>20180319203305_compra.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\LojaContextModelSnapshot.cs" />
     <Compile Include="Produto.cs" />
-    <Compile Include="ProdutoDAO.cs" />
     <Compile Include="ProdutoDAOEntity.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -116,5 +128,6 @@
   <ItemGroup>
     <Content Include="ddl-produtos.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
